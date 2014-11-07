@@ -4,7 +4,7 @@
   "description": "methods and documentation for dealing with Forms",
   "main": "forms.js",
   "scripts": {
-    "test": "./node_modules/.bin/intern-client config=tests/intern"
+    "test": "$(npm bin)/eslint . && $(npm bin)/intern-client config=tests/intern"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,8 @@
     "forms.js"
   ],
   "devDependencies": {
+    "assertive-chai": "^1.0.0",
+    "eslint": "^0.9.2",
     "intern": "^2.1.1",
     "node-assert": "Jxck/assert"
   }
