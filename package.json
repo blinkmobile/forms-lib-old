@@ -1,0 +1,22 @@
+{
+  "name": "blinkmobile-forms",
+  "version": "0.0.0",
+  "description": "methods and documentation for dealing with Forms",
+  "main": "forms.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blinkmobile/forms.git"
+  },
+  "author": "Ron Waldon",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/blinkmobile/forms/issues"
+  },
+  "homepage": "https://github.com/blinkmobile/forms",
+  "files": [
+    "forms.js"
+  ]
+}
