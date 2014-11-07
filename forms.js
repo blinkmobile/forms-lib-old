@@ -23,13 +23,34 @@ define([], function () {
   }
 
   /**
+   * @param {Objects[]} objects collection of [ { name: '...', ... }, ... ]
+   * @param {String[]} names desired ordering / filtering of objects
+   * @returns {Objects[]} sorted and filtered objects
+   */
+  function sortAndFilterByName(objects, names) {
+    var result;
+
+    // remove all elements not needed for this variation
+    result = objects.filter(function (o) {
+      return names.indexOf(o.name) !== -1;
+    });
+    // sort elements as per the variation-specific order
+    result.sort(function (a, b) {
+      var aIndex, bIndex;
+      aIndex = names.indexOf(a.name);
+      bIndex = names.indexOf(b.name);
+      return aIndex - bIndex;
+    });
+
+    return result;
+  }
+
+  /**
    * @param {Object} def original definition with multiple variations
    * @param {String} variation the specific variation desired
    * @return {Object} definition for a single variation
    */
   Forms.flattenDefinition = function flattenDefinition(def, variation) {
-    var elements, elNames;
-
     function collapseAction(d) {
       var attrs = d['default'] || {};
       if (variation && d[variation]) {
@@ -70,26 +91,10 @@ define([], function () {
       return def['default'];
     }
 
-    if (def[variation] && def[variation]._elements) {
-      elements = def['default']._elements;
-      delete def['default']._elements;
-      elNames = def[variation]._elements;
+    if (def[variation] && Array.isArray(def[variation]._elements)) {
+      def['default']._elements = sortAndFilterByName(def['default']._elements, def[variation]._elements);
       delete def[variation]._elements;
       extend(def['default'], def[variation]);
-
-      // remove all elements not needed for this variation
-      elements = elements.filter(function (el) {
-        return elNames.indexOf(el['default'].name) !== -1;
-      });
-      // sort elements as per the variation-specific order
-      elements.sort(function (a, b) {
-        var aIndex, bIndex;
-        aIndex = elNames.indexOf(a['default'].name);
-        bIndex = elNames.indexOf(b['default'].name);
-        return aIndex - bIndex;
-      });
-
-      def['default']._elements = elements;
     }
 
     return def['default'];
