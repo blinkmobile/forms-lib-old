@@ -25,8 +25,8 @@ define({
 		{ browserName: 'internet explorer', version: '11', platform: 'Windows 8.1' },
 		{ browserName: 'internet explorer', version: '10', platform: 'Windows 8' },
 		{ browserName: 'internet explorer', version: '9', platform: 'Windows 7' },
-		{ browserName: 'firefox', version: '28', platform: [ 'OS X 10.9', 'Windows 7', 'Linux' ] },
-		{ browserName: 'chrome', version: '34', platform: [ 'OS X 10.9', 'Windows 7', 'Linux' ] },
+		{ browserName: 'firefox', version: '28', platform: [ 'Linux' ] },
+		{ browserName: 'chrome', version: '34', platform: [ 'Linux' ] },
 		{ browserName: 'safari', version: '6', platform: 'OS X 10.8' },
 		{ browserName: 'safari', version: '7', platform: 'OS X 10.9' }
 	],
@@ -39,20 +39,25 @@ define({
 
 	// The desired AMD loader to use when running unit tests (client.html/client.js). Omit to use the default Dojo
 	// loader
+  /*
 	useLoader: {
 		'host-node': 'dojo/dojo',
 		'host-browser': 'node_modules/dojo/dojo.js'
-	},
+	},*/
 
 	// Configuration options for the module loader; any AMD configuration options supported by the specified AMD loader
 	// can be used here
 	loader: {
 		// Packages that should be registered with the loader in each testing environment
-		packages: [ { name: 'myPackage', location: '.' } ]
+		packages: [
+      { name: 'forms', location: '.', main: 'forms' },
+      { name: 'chai', location: 'node_modules/assertive-chai', main: 'assertive-chai' },
+      { name: 'assert', location: 'tests', main: 'assert' }
+    ]
 	},
 
 	// Non-functional test suite(s) to run in each browser
-	suites: [ /* 'myPackage/tests/foo', 'myPackage/tests/bar' */ ],
+	suites: [ 'tests/00_init' ],
 
 	// Functional test suite(s) to run in each browser once non-functional tests are completed
 	functionalSuites: [ /* 'myPackage/tests/functional' */ ],

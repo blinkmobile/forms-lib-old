@@ -1,6 +1,6 @@
 {
   "env": {
-    "amd": false,
+    "amd": true, // this project uses AMD for tests
     "browser": false,
     "mocha": false,
     "node": false
