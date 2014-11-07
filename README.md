@@ -16,3 +16,10 @@ in pre-ES5 environments such as Internet Explorer 8.
 ## Documentation
 
 See the [docs](docs) directory.
+
+## Testing
+
+```sh
+npm install
+npm test
+```

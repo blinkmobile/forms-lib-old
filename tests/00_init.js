@@ -8,8 +8,8 @@ define([
   assert = chai.assert;
 
   tdd.suite('Forms', function () {
-    tdd.test('', function () {
-      assert(!!forms);
+    tdd.test('Forms is an object', function () {
+      assert.isObject(forms);
     });
   });
 
