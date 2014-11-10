@@ -44,3 +44,8 @@ the specified Variation into a uniform data structure.
 
 If both Variations (`default` and desired) define the same Setting, then the
 value of the Setting from the non-`default` Variation will take precedence.
+
+Empty String values are the exception to this rule. In this case, the value from
+the `default` Variation would take precedence. If you wish to "unset" the
+`default` value, then you should use a String that is entirely white-space, e.g.
+ `" "`.

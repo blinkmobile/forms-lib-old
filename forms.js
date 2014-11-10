@@ -17,7 +17,14 @@ define([], function () {
       throw new TypeError('1st argument must be an Object');
     }
     Object.keys(source).forEach(function (prop) {
-      target[prop] = source[prop];
+      var value = source[prop];
+      if (typeof value === 'string') {
+        if (value) {
+          target[prop] = value.trim();
+        }
+      } else {
+        target[prop] = value;
+      }
     });
     return target;
   }
@@ -51,7 +58,7 @@ define([], function () {
    * @return {Object} definition for a single variation
    */
   Forms.flattenDefinition = function flattenDefinition(def, variation) {
-    function collapseAction(d) {
+    function flattenComponents(d) {
       var attrs = d['default'] || {};
       if (variation && d[variation]) {
         extend(attrs, d[variation]);
@@ -82,7 +89,7 @@ define([], function () {
       '_actions'
     ].forEach(function (components) {
       if (Array.isArray(def['default'][components])) {
-        def['default'][components] = def['default'][components].map(collapseAction);
+        def['default'][components] = def['default'][components].map(flattenComponents);
       }
     });
 
@@ -91,9 +98,11 @@ define([], function () {
       return def['default'];
     }
 
-    if (def[variation] && Array.isArray(def[variation]._elements)) {
-      def['default']._elements = sortAndFilterByName(def['default']._elements, def[variation]._elements);
-      delete def[variation]._elements;
+    if (def[variation]) {
+      if (Array.isArray(def[variation]._elements)) {
+        def['default']._elements = sortAndFilterByName(def['default']._elements, def[variation]._elements);
+        delete def[variation]._elements;
+      }
       extend(def['default'], def[variation]);
     }
 
