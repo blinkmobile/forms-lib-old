@@ -1,0 +1,30 @@
+{
+  "name": "blinkmobile-forms",
+  "version": "1.0.0",
+  "description": "methods and documentation for dealing with Forms",
+  "main": "forms.js",
+  "scripts": {
+    "test": "$(npm bin)/eslint . && $(npm bin)/intern-client config=tests/intern"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blinkmobile/forms.git"
+  },
+  "author": "Ron Waldon",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/blinkmobile/forms/issues"
+  },
+  "homepage": "https://github.com/blinkmobile/forms",
+  "files": [
+    "forms.js",
+    "docs/schema.json"
+  ],
+  "devDependencies": {
+    "assertive-chai": "^1.0.0",
+    "eslint": "^0.9.2",
+    "intern": "^2.1.1",
+    "node-assert": "Jxck/assert",
+    "z-schema": "^3.1.2"
+  }
+}
