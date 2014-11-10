@@ -29,10 +29,10 @@ Common Variation names include "add", "edit", "list", etc. Variations can have
 any name, and any special behaviour associated with them is the responsibility
 of the consumer of the definition.
 
-The `default` property is mandatory, all other Variations are optional.
-
 Unless explicitly specified, we will consider `default` a Variation, and we
 include it when we document Variations.
+
+The `default` Variation is mandatory, all other Variations are optional.
 
 ### Contents
 

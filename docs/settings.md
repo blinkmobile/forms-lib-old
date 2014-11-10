@@ -12,3 +12,5 @@ Certain properties have special meaning for code that consumes your definition.
 We prefix these properties with underscores so that they do not clash with
 current or future settings. As such, avoid prefixing properties with
 underscores.
+
+See [Components](components.md) for more information about reserved properties.
