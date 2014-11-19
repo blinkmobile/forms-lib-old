@@ -31,7 +31,6 @@
     "wrap-iife": 2,
     /* Variables */
     "no-catch-shadow": 2,
-    "no-undefined": 2,
     /* Node.JS */
     "no-sync": 2,
     /* Stylistic Issues */
