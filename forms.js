@@ -109,5 +109,22 @@ define([], function () {
     return def['default'];
   };
 
+  /**
+   * @param {String} klass contents of an HTML 'class' attribute
+   * @returns {Object} key-value pairs of properties encoded in the string
+   */
+  Forms.parseClass = function parseClass(klass) {
+    var lastSemicolon = klass.lastIndexOf(';');
+    var result = {};
+    if (lastSemicolon === -1) {
+      // no semi-colons, so the whole string is just basic CSS classes
+      return {
+        'class': klass
+      };
+    }
+    result['class'] = klass.substring(lastSemicolon + 1, klass.length).trim();
+    return result;
+  };
+
   return Forms;
 });
