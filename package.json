@@ -1,6 +1,6 @@
 {
   "name": "blinkmobile-forms",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "methods and documentation for dealing with Forms",
   "main": "forms.js",
   "scripts": {
@@ -21,10 +21,10 @@
     "docs/schema.json"
   ],
   "devDependencies": {
-    "assertive-chai": "^1.0.0",
-    "eslint": "^0.9.2",
-    "intern": "^2.1.1",
+    "assertive-chai": "^1.0",
+    "eslint": "^0.9",
+    "intern": "^2.1",
     "node-assert": "Jxck/assert",
-    "z-schema": "^3.1.2"
+    "z-schema": "^3.1"
   }
 }
