@@ -6,6 +6,7 @@ define([], function () {
   var CLASS_REGEXP = /([\w\-]+)(?:\:([^;]+))?;?/g;
 
   /**
+   * @private
    * @param {Object} target the object to which properties will be added
    * @param {Object} source the object from which properties will be copied
    * @returns {Object} target
@@ -31,6 +32,7 @@ define([], function () {
   }
 
   /**
+   * @private
    * @param {Objects[]} objects collection of [ { name: '...', ... }, ... ]
    * @param {String[]} names desired ordering / filtering of objects
    * @returns {Objects[]} sorted and filtered objects
@@ -111,6 +113,22 @@ define([], function () {
   };
 
   /**
+  * @private
+  * @param {String} input a String containing kebab-case, snake_case, etc
+  * @returns {String} a String with only camelCase
+  */
+  function toCamelCase(input) {
+    var output;
+    output = input.toLowerCase().trim();
+    output = output.replace(/[^a-z0-9]/g, '-');
+    // now everything is kebab-case
+    output = output.replace(/\W(\w)/g, function (match, p1) {
+      return p1.toUpperCase();
+    });
+    return output;
+  }
+
+  /**
    * @param {String} klass contents of an HTML 'class' attribute
    * @returns {Object} key-value pairs of properties encoded in the string
    */
@@ -119,6 +137,7 @@ define([], function () {
     var lastSemicolon = klass.lastIndexOf(';');
     var result = {};
     var matches;
+    var key;
 
     if (lastSemicolon === -1) {
       // no semi-colons, so the whole string is just basic CSS classes
@@ -133,10 +152,11 @@ define([], function () {
 
     matches = CLASS_REGEXP.exec(klass);
     while (Array.isArray(matches)) {
-      if (typeof matches[2] === 'undefined') {
-        result[matches[1]] = true;
+      key = toCamelCase(matches[1]);
+      if (matches[2] === undefined) {
+        result[key] = true;
       } else {
-        result[matches[1]] = matches[2];
+        result[key] = matches[2];
       }
       matches = CLASS_REGEXP.exec(klass);
     }

@@ -28,7 +28,9 @@ define([
         'bird cat dog',
         'bird: cat; dog',
         'bird; cat dog',
-        'bird; cat:; dog'
+        'bird; cat:; dog',
+        'bird-cat; dog',
+        'bird-cat: dog;'
       ];
       classes = [
         'cat',
@@ -36,7 +38,9 @@ define([
         'bird cat dog',
         'dog',
         'cat dog',
-        'dog'
+        'dog',
+        'dog',
+        ''
       ];
       keys = [
         [ 'class' ],
@@ -44,7 +48,9 @@ define([
         [ 'class' ],
         [ 'class', 'bird' ],
         [ 'class', 'bird' ],
-        [ 'class', 'bird', 'cat' ]
+        [ 'class', 'bird', 'cat' ],
+        [ 'class', 'birdCat' ],
+        [ 'class', 'birdCat' ]
       ];
       values = [ // [0] is not checked, as we have separate class tests
         [ null ],
@@ -52,7 +58,9 @@ define([
         [ null ],
         [ null, 'cat' ],
         [ null, true ],
-        [ null, true, true ]
+        [ null, true, true ],
+        [ null, true ],
+        [ null, 'dog' ]
       ];
     });
 
@@ -93,6 +101,11 @@ define([
         j = keys[i].length;
         while (j > 1) { // skip [0] because we have separate class tests
           j -= 1;
+          assert.property(
+            result,
+            keys[i][j],
+            JSON.stringify(fixtures[i]) + ' has property ' + keys[i][j]
+          );
           assert.equal(result[keys[i][j]], values[i][j], JSON.stringify(result));
         }
       }
