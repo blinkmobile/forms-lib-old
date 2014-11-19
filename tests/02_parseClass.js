@@ -18,6 +18,8 @@ define([
   tdd.suite('parsing class strings', function () {
     var fixtures;
     var classes;
+    var keys;
+    var values;
 
     tdd.before(function () {
       fixtures = [
@@ -36,6 +38,22 @@ define([
         'cat dog',
         'dog'
       ];
+      keys = [
+        [ 'class' ],
+        [ 'class' ],
+        [ 'class' ],
+        [ 'class', 'bird' ],
+        [ 'class', 'bird' ],
+        [ 'class', 'bird', 'cat' ]
+      ];
+      values = [ // [0] is not checked, as we have separate class tests
+        [ null ],
+        [ null ],
+        [ null ],
+        [ null, 'cat' ],
+        [ null, true ],
+        [ null, true, true ]
+      ];
     });
 
     tdd.test('result has expected CSS class(es)', function () {
@@ -47,6 +65,36 @@ define([
         assert.isObject(result);
         assert.property(result, 'class');
         assert.equal(result.class, classes[i]);
+      }
+    });
+
+    tdd.test('result Object has expected keys', function () {
+      var i = fixtures.length;
+      var result;
+      while (i > 0) {
+        i -= 1;
+        result = Forms.parseClass(fixtures[i]);
+        assert.isObject(result);
+        assert.sameMembers(
+          Object.keys(result), keys[i],
+          fixtures[i] + ' => Object.keys(' + JSON.stringify(result) + ') != ' + JSON.stringify(keys[i])
+        );
+      }
+    });
+
+    tdd.test('result Object has expected values', function () {
+      var i = fixtures.length;
+      var j;
+      var result;
+      while (i > 0) {
+        i -= 1;
+        result = Forms.parseClass(fixtures[i]);
+        assert.isObject(result);
+        j = keys[i].length;
+        while (j > 1) { // skip [0] because we have separate class tests
+          j -= 1;
+          assert.equal(result[keys[i][j]], values[i][j], JSON.stringify(result));
+        }
       }
     });
 

@@ -1,8 +1,9 @@
 define([], function () {
   'use strict';
 
-  var Forms;
-  Forms = {};
+  var Forms = {};
+  // https://github.com/angular/angular.js/blob/41b36e68/src/ng/compile.js#L706
+  var CLASS_REGEXP = /([\w\-]+)(?:\:([^;]+))?;?/g;
 
   /**
    * @param {Object} target the object to which properties will be added
@@ -114,15 +115,32 @@ define([], function () {
    * @returns {Object} key-value pairs of properties encoded in the string
    */
   Forms.parseClass = function parseClass(klass) {
+    // we intentially mispell "class" to pass ES3 syntax in IE8 and under
     var lastSemicolon = klass.lastIndexOf(';');
     var result = {};
+    var matches;
+
     if (lastSemicolon === -1) {
       // no semi-colons, so the whole string is just basic CSS classes
-      return {
-        'class': klass
-      };
+      result['class'] = klass;
+      return result;
     }
+
     result['class'] = klass.substring(lastSemicolon + 1, klass.length).trim();
+    klass = klass.substring(0, lastSemicolon + 1);
+    klass = klass.replace(/\s/g, '');
+    klass = klass.replace(/\:;/g, ';');
+
+    matches = CLASS_REGEXP.exec(klass);
+    while (Array.isArray(matches)) {
+      if (typeof matches[2] === 'undefined') {
+        result[matches[1]] = true;
+      } else {
+        result[matches[1]] = matches[2];
+      }
+      matches = CLASS_REGEXP.exec(klass);
+    }
+
     return result;
   };
 
