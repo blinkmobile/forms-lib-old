@@ -50,7 +50,7 @@ define({
 	loader: {
 		// Packages that should be registered with the loader in each testing environment
 		packages: [
-      { name: 'forms', location: '.', main: 'forms' },
+      { name: 'forms', location: './src/formslib' },
       { name: 'chai', location: 'node_modules/assertive-chai', main: 'assertive-chai' },
       { name: 'assert', location: 'tests', main: 'assert' }
     ]
