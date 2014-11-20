@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.2.0
+
+### Added
+
+- FORMS-105: `castPropertyValues()` method to cast to types in bulk
+
+
 ## v1.1.0
 
 ### Added

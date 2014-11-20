@@ -4,7 +4,7 @@ It may be convenient to encode definition Settings as a CSS class value. We
 provide (and use) a helper function to decode such Settings. This allows
 designers to configure JavaScript components using CSS.
 
-## `parseClass`
+## `parseClass()`
 
 - @param {String} class contents of an HTML 'class' attribute
 - @returns {Object} key-value pairs of properties encoded in the string
@@ -60,3 +60,27 @@ For example, `multi-word: value;` becomes:
   "multiWord": "value"
 }
 ```
+
+## `castPropertyValues()`
+
+- @param {Object} input key-value pairs to cast
+- @param {Object} example key-value pairs where values are of desired types
+- @returns {Object} a new Object with same properties as input but with cast values
+
+The output from `parseClass()` (above) treats all values as Strings. We provide
+a companion method to allow values to be cast to Boolean or Number types in
+bulk.
+
+`castPropertyValues()` will take the values from the first parameter, and cast
+those values using the types found in the second parameter.
+
+For example, `castPropertyValues({ value: '123' }, { value: 0 })` will return:
+
+```json
+{
+  "value": 123
+}
+```
+
+We use the built-in `parseFloat()` method to cast values to a Number, so be
+aware that values that are not numeric may have unexpected results.
