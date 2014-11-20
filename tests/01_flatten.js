@@ -13,6 +13,18 @@ define([
       assert.isFunction(Forms.flattenDefinition);
     });
 
+    tdd.test('throws an error for bad argument[0]', function () {
+      assert.throws(function () {
+        Forms.flattenDefinition(null);
+      }, Error);
+      assert.throws(function () {
+        Forms.flattenDefinition({});
+      }, Error);
+      assert.throws(function () {
+        Forms.flattenDefinition({ 'default': {} });
+      }, Error);
+    });
+
   });
 
   tdd.suite('flattening', function () {
