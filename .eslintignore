@@ -1,2 +1,6 @@
 # 3rd-party files
 node_modules
+
+# output / temporary files
+dist
+src/build.js

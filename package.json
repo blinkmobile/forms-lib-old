@@ -4,6 +4,7 @@
   "description": "methods and documentation for dealing with Forms",
   "main": "forms.js",
   "scripts": {
+    "pretest": "$(npm bin)/r.js -o src/build.js",
     "test": "$(npm bin)/eslint . && $(npm bin)/intern-client config=tests/intern"
   },
   "repository": {
@@ -25,6 +26,7 @@
     "eslint": "^0.9",
     "intern": "^2.1",
     "node-assert": "Jxck/assert",
+    "requirejs": "^2.1",
     "z-schema": "^3.1"
   }
 }

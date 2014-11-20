@@ -1,16 +1,12 @@
 define([], function () {
   'use strict';
 
-  var Forms = {};
-  // https://github.com/angular/angular.js/blob/41b36e68/src/ng/compile.js#L706
-  var CLASS_REGEXP = /([\w\-]+)(?:\:([^;]+))?;?/g;
-
   /**
-   * @private
-   * @param {Object} target the object to which properties will be added
-   * @param {Object} source the object from which properties will be copied
-   * @returns {Object} target
-   */
+  * @private
+  * @param {Object} target the object to which properties will be added
+  * @param {Object} source the object from which properties will be copied
+  * @returns {Object} target
+  */
   function extend(target, source) {
     if (!target || typeof target !== 'object') {
       throw new TypeError('1st argument must be an Object');
@@ -32,11 +28,11 @@ define([], function () {
   }
 
   /**
-   * @private
-   * @param {Objects[]} objects collection of [ { name: '...', ... }, ... ]
-   * @param {String[]} names desired ordering / filtering of objects
-   * @returns {Objects[]} sorted and filtered objects
-   */
+  * @private
+  * @param {Objects[]} objects collection of [ { name: '...', ... }, ... ]
+  * @param {String[]} names desired ordering / filtering of objects
+  * @returns {Objects[]} sorted and filtered objects
+  */
   function sortAndFilterByName(objects, names) {
     var result;
 
@@ -56,11 +52,12 @@ define([], function () {
   }
 
   /**
+   * @public
    * @param {Object} def original definition with multiple variations
    * @param {String} variation the specific variation desired
    * @return {Object} definition for a single variation
    */
-  Forms.flattenDefinition = function flattenDefinition(def, variation) {
+  function flattenDefinition(def, variation) {
     function flattenComponents(d) {
       var attrs = d['default'] || {};
       if (variation && d[variation]) {
@@ -84,12 +81,12 @@ define([], function () {
 
     // found definition, but need to collapse to specific variation/view
     [
-      '_elements',
-      '_sections',
-      '_pages',
-      '_behaviours',
-      '_checks',
-      '_actions'
+    '_elements',
+    '_sections',
+    '_pages',
+    '_behaviours',
+    '_checks',
+    '_actions'
     ].forEach(function (components) {
       if (Array.isArray(def['default'][components])) {
         def['default'][components] = def['default'][components].map(flattenComponents);
@@ -110,59 +107,7 @@ define([], function () {
     }
 
     return def['default'];
-  };
-
-  /**
-  * @private
-  * @param {String} input a String containing kebab-case, snake_case, etc
-  * @returns {String} a String with only camelCase
-  */
-  function toCamelCase(input) {
-    var output;
-    output = input.toLowerCase().trim();
-    output = output.replace(/[^a-z0-9]/g, '-');
-    // now everything is kebab-case
-    output = output.replace(/\W(\w)/g, function (match, p1) {
-      return p1.toUpperCase();
-    });
-    return output;
   }
 
-  /**
-   * @param {String} klass contents of an HTML 'class' attribute
-   * @returns {Object} key-value pairs of properties encoded in the string
-   */
-  Forms.parseClass = function parseClass(klass) {
-    // we intentially mispell "class" to pass ES3 syntax in IE8 and under
-    var lastSemicolon = klass.lastIndexOf(';');
-    var result = {};
-    var matches;
-    var key;
-
-    if (lastSemicolon === -1) {
-      // no semi-colons, so the whole string is just basic CSS classes
-      result['class'] = klass;
-      return result;
-    }
-
-    result['class'] = klass.substring(lastSemicolon + 1, klass.length).trim();
-    klass = klass.substring(0, lastSemicolon + 1);
-    klass = klass.replace(/\s/g, '');
-    klass = klass.replace(/\:;/g, ';');
-
-    matches = CLASS_REGEXP.exec(klass);
-    while (Array.isArray(matches)) {
-      key = toCamelCase(matches[1]);
-      if (matches[2] === undefined) {
-        result[key] = true;
-      } else {
-        result[key] = matches[2];
-      }
-      matches = CLASS_REGEXP.exec(klass);
-    }
-
-    return result;
-  };
-
-  return Forms;
+  return flattenDefinition;
 });
