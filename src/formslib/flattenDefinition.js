@@ -1,4 +1,4 @@
-define([], function () {
+define(['./clone'], function (clone) {
   'use strict';
 
   /**
@@ -77,7 +77,7 @@ define([], function () {
     }
 
     // clone the definition object first, for safety
-    def = JSON.parse(JSON.stringify(def));
+    def = clone(def);
 
     // found definition, but need to collapse to specific variation/view
     [
