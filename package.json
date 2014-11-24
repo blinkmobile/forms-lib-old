@@ -1,6 +1,6 @@
 {
   "name": "blinkmobile-forms",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "methods and documentation for dealing with Forms",
   "main": "forms.js",
   "scripts": {
@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/blinkmobile/forms",
   "files": [
-    "forms.js",
+    "dist/formslib.js",
     "docs/schema.json"
   ],
   "devDependencies": {
