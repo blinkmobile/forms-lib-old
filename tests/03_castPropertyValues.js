@@ -18,13 +18,13 @@ test('Forms.castPropertyValues', function (t) {
   });
 
   t.test('throws an error for bad parameters', function (tt) {
-    tt.throws(function () {
+    tt['throws'](function () {
       Forms.castPropertyValues(null, null);
     }, Error);
-    tt.throws(function () {
+    tt['throws'](function () {
       Forms.castPropertyValues({}, null);
     }, Error);
-    tt.throws(function () {
+    tt['throws'](function () {
       Forms.castPropertyValues(null, {});
     }, Error);
     tt.end();

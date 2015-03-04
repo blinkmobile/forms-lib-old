@@ -17,6 +17,7 @@
     "block-scoped-var": 2,
     "complexity": [1, 3],
     "default-case": 2,
+    "dot-notation": [2, { "allowKeywords": false }],
     "guard-for-in": 2,
     "no-div-regex": 2,
     "no-else-return": 2,

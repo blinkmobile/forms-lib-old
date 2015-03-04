@@ -75,7 +75,7 @@ test('parsing class strings', function (t) {
       result = Forms.parseClass(fixtures[i]);
       tt.isObject(result);
       tt.property(result, 'class');
-      tt.equal(result.class, classes[i]);
+      tt.equal(result['class'], classes[i]);
     }
     tt.end();
   });

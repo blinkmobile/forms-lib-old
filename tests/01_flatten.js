@@ -18,13 +18,13 @@ test('Forms.flattenDefinition', function (t) {
   });
 
   t.test('throws an error for bad argument[0]', function (tt) {
-    tt.throws(function () {
+    tt['throws'](function () {
       Forms.flattenDefinition(null);
     }, Error);
-    tt.throws(function () {
+    tt['throws'](function () {
       Forms.flattenDefinition({});
     }, Error);
-    tt.throws(function () {
+    tt['throws'](function () {
       Forms.flattenDefinition({ 'default': {} });
     }, Error);
     tt.end();

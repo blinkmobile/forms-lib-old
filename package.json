@@ -23,7 +23,7 @@
   ],
   "devDependencies": {
     "browserify": "^9.0.3",
-    "eslint": "^0.9",
+    "eslint": "^0.15",
     "istanbul": "^0.3.6",
     "requirejs": "^2.1",
     "tape": "^3.5.0",
