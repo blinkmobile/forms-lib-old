@@ -101,7 +101,6 @@ test('casting values', function (t) {
   t.test('results have expected types', function (tt) {
     var prop;
     var value;
-    console.log(result);
     for (prop in values) {
       if (values.hasOwnProperty(prop)) {
         tt.property(result, prop, '[' + prop + ']');

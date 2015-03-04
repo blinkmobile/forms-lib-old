@@ -99,6 +99,7 @@ function flattenDefinition(def, variation) {
     return def['default'];
   }
 
+  /*eslint-disable no-underscore-dangle*/ // "_elements" is part of our spec
   if (def[variation]) {
     if (Array.isArray(def[variation]._elements)) {
       def['default']._elements = sortAndFilterByName(def['default']._elements, def[variation]._elements);
@@ -106,6 +107,7 @@ function flattenDefinition(def, variation) {
     }
     extend(def['default'], def[variation]);
   }
+  /*eslint-enable no-underscore-dangle*/
 
   return def['default'];
 }

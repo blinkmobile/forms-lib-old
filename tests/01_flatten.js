@@ -1,3 +1,4 @@
+/*eslint-disable no-underscore-dangle*/ // "_elements" is part of our spec
 'use strict';
 
 // 3rd-party modules
