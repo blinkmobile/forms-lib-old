@@ -1,9 +1,9 @@
 {
   "env": {
-    "amd": true, // this project uses AMD for tests
+    "amd": false,
     "browser": false,
     "mocha": false,
-    "node": false
+    "node": true
   },
   "globals": {
     "Promise": false

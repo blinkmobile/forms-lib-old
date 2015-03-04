@@ -1,16 +1,11 @@
-define([
-  'intern!tdd',
-  'chai',
-  'forms'
-], function (tdd, chai, forms) {
-  'use strict';
-  var assert;
-  assert = chai.assert;
+/*eslint-env node*/
+'use strict';
 
-  tdd.suite('Forms', function () {
-    tdd.test('Forms is an object', function () {
-      assert.isObject(forms);
-    });
-  });
+var test = require('tape');
 
+var forms = require('../dist/formslib');
+
+test('Forms is an object', function (t) {
+  t.isObject(forms);
+  t.end();
 });

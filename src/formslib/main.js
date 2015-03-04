@@ -1,17 +1,7 @@
-define([
-  './castPropertyValues',
-  './flattenDefinition',
-  './parseClass'
-], function (
-  castPropertyValues,
-  flattenDefinition,
-  parseClass
-) {
-  'use strict';
+'use strict';
 
-  return {
-    castPropertyValues: castPropertyValues,
-    flattenDefinition: flattenDefinition,
-    parseClass: parseClass
-  };
-});
+module.exports = {
+  castPropertyValues: require('./castPropertyValues'),
+  flattenDefinition: require('./flattenDefinition'),
+  parseClass: require('./parseClass')
+};
