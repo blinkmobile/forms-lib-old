@@ -1,9 +1,9 @@
 {
   "env": {
-    "amd": true, // this project uses AMD for tests
+    "amd": false,
     "browser": false,
     "mocha": false,
-    "node": false
+    "node": true
   },
   "globals": {
     "Promise": false
@@ -17,6 +17,7 @@
     "block-scoped-var": 2,
     "complexity": [1, 3],
     "default-case": 2,
+    "dot-notation": [2, { "allowKeywords": false }],
     "guard-for-in": 2,
     "no-div-regex": 2,
     "no-else-return": 2,
@@ -35,7 +36,7 @@
     "no-sync": 2,
     /* Stylistic Issues */
     "no-mixed-spaces-and-tabs": 2,
-    "no-underscore-dangle": 1, // necessary for our definition format
+    "no-underscore-dangle": 2,
     "quotes": [1, "single", "avoid-escape"]
   }
 }
