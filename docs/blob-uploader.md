@@ -119,6 +119,51 @@ will happen.
 
 - @param {BlinkFormBlob} blob
 - @param {Function} callback - function (Error, BlinkFormSavedBlob)
+- @returns {BlinkFormBlob} the input blob but ensuring a "blob" UUID property
 - @fires empty - the queue no longer contains queued uploads
 - @fires drain - the queue no longer contains queued or active uploads
 - @fires saturated - reached the concurrency limit
+- @fires xhr - an {XMLHttpRequest} object is available (passed to handler)
+
+
+## Example
+
+```javascript
+// we need to supply our own blob UUID if we want to track the progress later
+var thisUUID = 'abc123...';
+var blob = {
+  answerSpace: 'space',
+  tuple: '123',
+  blob: thisUUID,
+  file: 'abc123=='
+};
+
+function progressHandler(event) {
+  // TODO: do something with event.lengthComputable {Boolean}
+  // TODO: do something with event.loaded {Number}
+  // TODO: do something with event.total {Number}
+}
+
+function xhrHandler(xhr, blob) {
+  // we need to double-check that this xhr is for this blob
+  if (blob.blob === thisUUID) {
+    // hooray, a match, we can stop listening now
+    Forms.blobUploader.removeListener('xhr', xhrHandler);
+    // track progress, if the web engine supports it
+    if (xhr.upload && xhr.upload.addEventListener) {
+      xhr.upload.addEventListener('progress', progressHandler, false);
+    }
+  }
+}
+Forms.blobUploader.on('xhr', xhrHandler)
+
+Forms.blobUploader.on('drain', function () {
+  // TODO: all uploads completed, what now?
+});
+
+// now that we're ready to handle the events, we can begin!
+Forms.blobUploader.saveBlob(blob, function (err, res) {
+  // TODO: double-check and handle err if necessary, first thing!
+  // TODO: do something clever with the server response
+});
+```

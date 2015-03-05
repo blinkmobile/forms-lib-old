@@ -889,7 +889,7 @@ var endpoint = '';
 var bu = new EventEmitter();
 
 var queue = async.priorityQueue(function (blob, callback) {
-  xhr({
+  var xhrObj = xhr({
     method: 'POST',
     url: endpoint,
     json: blob
@@ -902,6 +902,7 @@ var queue = async.priorityQueue(function (blob, callback) {
     }
     callback(err, out);
   });
+  bu.emit('xhr', xhrObj, blob);
 }, DEFAULT_CONCURRENCY);
 
 // export events from queue
@@ -944,6 +945,7 @@ bu.setEndpoint = function (url) {
 bu.saveBlob = function (blob, callback) {
   blob.blob = blob.blob || uuid.v4();
   queue.push(blob, 10, callback);
+  return blob;
 };
 
 /*eslint-disable no-underscore-dangle*/ // server response format

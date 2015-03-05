@@ -138,6 +138,18 @@ test('Forms.blobUploader with passing XHR', function (t) {
     Forms.blobUploader.saveBlob({});
   });
 
+  t.test('passed upload eventually emits "xhr" event', function (tt) {
+    var xhrHandler = function (xhr, blob) {
+      if (blob.blob === 'abc') {
+        Forms.blobUploader.removeListener('xhr', xhrHandler);
+        tt.ok(xhr);
+        tt.end();
+      }
+    };
+    Forms.blobUploader.on('xhr', xhrHandler);
+    Forms.blobUploader.saveBlob({ blob: 'abc' });
+  });
+
   t.test('passed upload eventually calls callback', function (tt) {
     Forms.blobUploader.saveBlob({}, function (err, blob) {
       tt.notOk(err);
@@ -163,6 +175,18 @@ test('Forms.blobUploader with passing legacy XHR', function (t) {
       tt.end();
     });
     Forms.blobUploader.saveBlob({});
+  });
+
+  t.test('passed upload eventually emits "xhr" event', function (tt) {
+    var xhrHandler = function (xhr, blob) {
+      if (blob.blob === 'abc') {
+        Forms.blobUploader.removeListener('xhr', xhrHandler);
+        tt.ok(xhr);
+        tt.end();
+      }
+    };
+    Forms.blobUploader.on('xhr', xhrHandler);
+    Forms.blobUploader.saveBlob({ blob: 'abc' });
   });
 
   t.test('passed upload eventually calls callback', function (tt) {
