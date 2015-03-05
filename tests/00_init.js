@@ -3,7 +3,7 @@
 
 var test = require('tape');
 
-var forms = require('../dist/formslib');
+var forms = require('../src/formslib/main');
 
 test('Forms is an object', function (t) {
   t.isObject(forms);

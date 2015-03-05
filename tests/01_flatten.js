@@ -7,7 +7,7 @@ var test = require('tape');
 
 // our modules
 
-var Forms = require('../dist/formslib');
+var Forms = require('../src/formslib/main');
 
 // this module
 
