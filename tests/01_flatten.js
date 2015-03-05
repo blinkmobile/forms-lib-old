@@ -1,204 +1,214 @@
-define([
-  'intern!tdd',
-  'chai',
-  'forms'
-], function (tdd, chai, Forms) {
-  'use strict';
-  var assert;
-  assert = chai.assert;
+/*eslint-disable no-underscore-dangle*/ // "_elements" is part of our spec
+'use strict';
 
-  tdd.suite('Forms.flattenDefinition', function () {
+// 3rd-party modules
 
-    tdd.test('flattenDefinition is a function', function () {
-      assert.isFunction(Forms.flattenDefinition);
-    });
+var test = require('tape');
 
-    tdd.test('throws an error for bad argument[0]', function () {
-      assert.throws(function () {
-        Forms.flattenDefinition(null);
-      }, Error);
-      assert.throws(function () {
-        Forms.flattenDefinition({});
-      }, Error);
-      assert.throws(function () {
-        Forms.flattenDefinition({ 'default': {} });
-      }, Error);
-    });
+// our modules
 
+var Forms = require('../src/formslib/main');
+
+// this module
+
+test('Forms.flattenDefinition', function (t) {
+
+  t.test('flattenDefinition is a function', function (tt) {
+    tt.isFunction(Forms.flattenDefinition);
+    tt.end();
   });
 
-  tdd.suite('flattening', function () {
-    var def, flat;
+  t.test('throws an error for bad argument[0]', function (tt) {
+    tt['throws'](function () {
+      Forms.flattenDefinition(null);
+    }, Error);
+    tt['throws'](function () {
+      Forms.flattenDefinition({});
+    }, Error);
+    tt['throws'](function () {
+      Forms.flattenDefinition({ 'default': {} });
+    }, Error);
+    tt.end();
+  });
 
-    tdd.before(function () {
-      def = {
-        'default': {
-          name: 'my-form',
-          _elements: [
-            {
-              'default': {
-                name: 'my-element'
-              }
-            }
-          ]
+  t.end();
+});
+
+test('flattening', function (t) {
+  var def, flat;
+
+  def = {
+    'default': {
+      name: 'my-form',
+      _elements: [
+        {
+          'default': {
+            name: 'my-element'
+          }
         }
-      };
-      flat = Forms.flattenDefinition(def);
-    });
+      ]
+    }
+  };
+  flat = Forms.flattenDefinition(def);
 
-    tdd.test('output is an Object', function () {
-      assert.isObject(flat);
-    });
-
-    tdd.test('properties in default are flattened as expected', function () {
-      assert.notProperty(flat, 'default');
-      assert.isString(flat.name);
-      assert.equal(flat.name, def['default'].name);
-    });
-
-    tdd.test('components in default are flattened as expected', function () {
-      var el;
-      assert.isArray(flat._elements);
-      assert.lengthOf(flat._elements, 1);
-      el = flat._elements[0];
-      assert.notProperty(el, 'default');
-      assert.isString(el.name);
-      assert.equal(el.name, def['default']._elements[0]['default'].name);
-    });
-
+  t.test('output is an Object', function (tt) {
+    tt.isObject(flat);
+    tt.end();
   });
 
-  tdd.suite('flattening with variations', function () {
-    var def, flat;
+  t.test('properties in default are flattened as expected', function (tt) {
+    tt.notProperty(flat, 'default');
+    tt.isString(flat.name);
+    tt.equal(flat.name, def['default'].name);
+    tt.end();
+  });
 
-    tdd.before(function () {
-      def = {
-        'default': {
-          name: 'my-form',
-          _elements: [
-            {
-              'default': {
-                name: 'element-1'
-              },
-              add: {
-                label: 'Element 1'
-              }
-            },
-            {
-              'default': {
-                name: 'element-2'
-              },
-              edit: {
-                label: 'Element 2'
-              }
-            },
-            {
-              'default': {
-                name: 'element-3'
-              },
-              list: {
-                label: 'Element 3'
-              }
-            }
-          ]
+  t.test('components in default are flattened as expected', function (tt) {
+    var el;
+    tt.isArray(flat._elements);
+    tt.lengthOf(flat._elements, 1);
+    el = flat._elements[0];
+    tt.notProperty(el, 'default');
+    tt.isString(el.name);
+    tt.equal(el.name, def['default']._elements[0]['default'].name);
+    tt.end();
+  });
+
+  t.end();
+});
+
+test('flattening with variations', function (t) {
+  var def, flat;
+
+  def = {
+    'default': {
+      name: 'my-form',
+      _elements: [
+        {
+          'default': {
+            name: 'element-1'
+          },
+          add: {
+            label: 'Element 1'
+          }
         },
-        add: {
-          label: 'My Form',
-          _elements: [
-            'element-2',
-            'element-1'
-          ]
+        {
+          'default': {
+            name: 'element-2'
+          },
+          edit: {
+            label: 'Element 2'
+          }
+        },
+        {
+          'default': {
+            name: 'element-3'
+          },
+          list: {
+            label: 'Element 3'
+          }
         }
-      };
-      flat = Forms.flattenDefinition(def, 'add');
-    });
+      ]
+    },
+    add: {
+      label: 'My Form',
+      _elements: [
+        'element-2',
+        'element-1'
+      ]
+    }
+  };
+  flat = Forms.flattenDefinition(def, 'add');
 
-    tdd.test('output is an Object', function () {
-      assert.isObject(flat);
-    });
-
-    tdd.test('properties in default are flattened as expected', function () {
-      assert.isString(flat.label);
-      assert.equal(flat.label, def.add.label);
-    });
-
-    tdd.test('_elements listing in a variation controls order', function () {
-      var original;
-      assert.lengthOf(flat._elements, 2);
-      original = def['default']._elements[1];
-      assert.isString(flat._elements[0].name);
-      assert.equal(flat._elements[0].name, original['default'].name);
-      original = def['default']._elements[0];
-      assert.isString(flat._elements[1].label);
-      assert.equal(flat._elements[1].label, original.add.label);
-    });
-
+  t.test('output is an Object', function (tt) {
+    tt.isObject(flat);
+    tt.end();
   });
 
-  tdd.suite('precedence', function () {
-    var def;
-
-    tdd.before(function () {
-      def = {
-        'default': {
-          name: 'my-form',
-          string: 'My Form',
-          'boolean': true,
-          number: 1
-        },
-        add: {
-          string: '',
-          'boolean': false,
-          number: 0
-        },
-        edit: {
-          string: ' '
-        }
-      };
-    });
-
-    tdd.test('"add" Variation is flattened as expected', function () {
-      var flat = Forms.flattenDefinition(def, 'add');
-
-      assert.property(flat, 'name');
-      assert.isString(flat.name);
-      assert.equal(flat.name, def['default'].name);
-
-      // default.string is used because add.string is empty
-      assert.property(flat, 'string');
-      assert.isString(flat.string);
-      assert.equal(flat.string, def['default'].string);
-
-      assert.property(flat, 'boolean');
-      assert.isBoolean(flat['boolean']);
-      assert.equal(flat['boolean'], def.add['boolean']);
-
-      assert.property(flat, 'number');
-      assert.isNumber(flat.number);
-      assert.equal(flat.number, def.add.number);
-    });
-
-    tdd.test('"edit" Variation is flattened as expected', function () {
-      var flat = Forms.flattenDefinition(def, 'edit');
-
-      assert.property(flat, 'name');
-      assert.isString(flat.name);
-      assert.equal(flat.name, def['default'].name);
-
-      // edit.string is used because it is not empty
-      assert.property(flat, 'string');
-      assert.isString(flat.string);
-      assert.equal(flat.string, def.edit.string.trim());
-
-      assert.property(flat, 'boolean');
-      assert.isBoolean(flat['boolean']);
-      assert.equal(flat['boolean'], def['default']['boolean']);
-
-      assert.property(flat, 'number');
-      assert.isNumber(flat.number);
-      assert.equal(flat.number, def['default'].number);
-    });
-
+  t.test('properties in default are flattened as expected', function (tt) {
+    tt.isString(flat.label);
+    tt.equal(flat.label, def.add.label);
+    tt.end();
   });
 
+  t.test('_elements listing in a variation controls order', function (tt) {
+    var original;
+    tt.lengthOf(flat._elements, 2);
+    original = def['default']._elements[1];
+    tt.isString(flat._elements[0].name);
+    tt.equal(flat._elements[0].name, original['default'].name);
+    original = def['default']._elements[0];
+    tt.isString(flat._elements[1].label);
+    tt.equal(flat._elements[1].label, original.add.label);
+    tt.end();
+  });
+
+  t.end();
+});
+
+test('precedence', function (t) {
+  var def;
+
+  def = {
+    'default': {
+      name: 'my-form',
+      string: 'My Form',
+      'boolean': true,
+      number: 1
+    },
+    add: {
+      string: '',
+      'boolean': false,
+      number: 0
+    },
+    edit: {
+      string: ' '
+    }
+  };
+
+  t.test('"add" Variation is flattened as expected', function (tt) {
+    var flat = Forms.flattenDefinition(def, 'add');
+
+    tt.property(flat, 'name');
+    tt.isString(flat.name);
+    tt.equal(flat.name, def['default'].name);
+
+    // default.string is used because add.string is empty
+    tt.property(flat, 'string');
+    tt.isString(flat.string);
+    tt.equal(flat.string, def['default'].string);
+
+    tt.property(flat, 'boolean');
+    tt.isBoolean(flat['boolean']);
+    tt.equal(flat['boolean'], def.add['boolean']);
+
+    tt.property(flat, 'number');
+    tt.isNumber(flat.number);
+    tt.equal(flat.number, def.add.number);
+    tt.end();
+  });
+
+  t.test('"edit" Variation is flattened as expected', function (tt) {
+    var flat = Forms.flattenDefinition(def, 'edit');
+
+    tt.property(flat, 'name');
+    tt.isString(flat.name);
+    tt.equal(flat.name, def['default'].name);
+
+    // edit.string is used because it is not empty
+    tt.property(flat, 'string');
+    tt.isString(flat.string);
+    tt.equal(flat.string, def.edit.string.trim());
+
+    tt.property(flat, 'boolean');
+    tt.isBoolean(flat['boolean']);
+    tt.equal(flat['boolean'], def['default']['boolean']);
+
+    tt.property(flat, 'number');
+    tt.isNumber(flat.number);
+    tt.equal(flat.number, def['default'].number);
+    tt.end();
+  });
+
+  t.end();
 });
