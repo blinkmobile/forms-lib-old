@@ -1,5 +1,26 @@
 # Changelog
 
+## v1.3.1
+
+### Fixed
+
+- include `async.priorityQueue` in the dist/ build to simplify downstream use
+
+
+## v1.3.0
+
+### Added
+
+- FORMS-123: `blobUploader` with methods for parallel background uploads
+
+
+## v1.2.1
+
+### Fixed
+
+- package.json properly references module entrypoint
+
+
 ## v1.2.0
 
 ### Added
