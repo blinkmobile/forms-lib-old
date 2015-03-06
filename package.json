@@ -4,7 +4,7 @@
   "description": "methods and documentation for dealing with Forms",
   "main": "forms.js",
   "scripts": {
-    "pretest": "$(npm bin)/browserify -s FormsLib -u async -r src/formslib/main -o dist/formslib.js",
+    "pretest": "$(npm bin)/browserify -s FormsLib -r src/formslib/main -o dist/formslib.js",
     "test": "$(npm bin)/eslint . && $(npm bin)/istanbul cover tests"
   },
   "repository": {
@@ -30,7 +30,6 @@
     "browserify": "^9.0.3",
     "eslint": "^0.15",
     "istanbul": "^0.3.6",
-    "requirejs": "^2.1",
     "tape": "^3.5.0",
     "tape-chai": "^1.0.0",
     "z-schema": "^3.1"
