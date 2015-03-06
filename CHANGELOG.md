@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.3.1
+
+### Fixed
+
+- include `async.priorityQueue` in the dist/ build to simplify downstream use
+
+
 ## v1.3.0
 
 ### Added
