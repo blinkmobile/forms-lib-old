@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.0.0
+
+### Changed
+
+- FORMS-123: dropped blobUploader, to be re-attempted elsewhere
+
+
 ## v1.3.1
 
 ### Fixed
