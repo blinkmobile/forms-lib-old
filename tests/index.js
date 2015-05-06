@@ -15,5 +15,3 @@ require('./01_flatten');
 require('./02_parseClass');
 
 require('./03_castPropertyValues');
-
-require('./blob-uploader');

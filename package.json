@@ -4,7 +4,7 @@
   "description": "methods and documentation for dealing with Forms",
   "main": "forms.js",
   "scripts": {
-    "pretest": "$(npm bin)/browserify -s FormsLib -r src/formslib/main -o dist/formslib.js",
+    "pretest": "$(npm bin)/browserify -s FormsLib -r ./src/formslib/main -o dist/formslib.js",
     "test": "$(npm bin)/eslint . && $(npm bin)/istanbul cover tests"
   },
   "repository": {
@@ -21,11 +21,7 @@
     "dist/formslib.js",
     "docs/schema.json"
   ],
-  "dependencies": {
-    "async": "blinkmobile/async-priority-queue#37b23b6",
-    "node-uuid": "^1.4.2",
-    "xhr": "^2.0.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "browserify": "^9.0.3",
     "eslint": "^0.15",
